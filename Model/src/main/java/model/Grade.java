@@ -5,46 +5,51 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Participant implements HasId<Long> {
+public class Grade implements HasId<Long> {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
-    private String name;
+    private Double value;
+    @OneToOne
+    private User teacher;
 
-    public Participant() {
-        name = "";
+    public Grade() {
+        value = -1D;
+        teacher = new User();
     }
 
-    public Participant(Long id, String name) {
+    public Grade(Long id, Double value) {
         this.id = id;
-        this.name = name;
+        this.value = value;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Double getValue() {
+        return value;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setValue(Double value) {
+        this.value = value;
     }
 
     @Override
     public String toString() {
-        return "Participant{" +
+        return "Grade{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", value=" + value +
                 '}';
     }
 }

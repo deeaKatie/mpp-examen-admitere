@@ -23,7 +23,10 @@ public class User implements HasId<Long> {
         this.password = password;
     }
 
-    public User(){}
+    public User(){
+        username = "";
+        password = "";
+    }
 
     public Long getId() {
         return id;
