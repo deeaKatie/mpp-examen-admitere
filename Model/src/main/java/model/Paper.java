@@ -20,19 +20,21 @@ public class Paper implements HasId<Long> {
     private List<Grade> grades;
     @OneToOne
     private Grade finalGrade;
+    private String status;
 
     public Paper() {
         corectori = new ArrayList<>();
         grades = new ArrayList<>();
+        status = "toBeCorrected";
     }
 
-    public Paper(Long id, List<User> corectori, Participant participant, List<Grade> grades, Grade finalGrade) {
+    public Paper(Long id, List<User> corectori, Participant participant, List<Grade> grades, Grade finalGrade, String status) {
         this.id = id;
         this.corectori = corectori;
         this.participant = participant;
         this.grades = grades;
         this.finalGrade = finalGrade;
-
+        this.status = status;
     }
 
     public void addGrade(Grade grade) {
@@ -42,6 +44,15 @@ public class Paper implements HasId<Long> {
     public void addCorector(User user) {
         corectori.add(user);
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public Long getId() {
         return id;
