@@ -72,8 +72,8 @@ public class UserDBRepository implements IUserRepository{
 
     @Override
     public Iterable<User> getAll() {
-        SQLQuery query = session.createSQLQuery("select * from users");
-        query.addEntity(User.class);
+        //todo fix original template funtion with hinernate queries
+        Query query = session.createQuery("from User");
         List<User> users = query.list();
         return users;
     }

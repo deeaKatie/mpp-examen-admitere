@@ -31,6 +31,12 @@ public class StartServer {
 
         IServices service=new Service(userRepository, gameDBRepository);
 
+        System.out.println("Users: ");
+        for( var u : userRepository.getAll() ) {
+            System.out.println(u);
+        }
+        System.out.println("Done");
+
         int serverPort = defaultPort;
         try {
             serverPort = Integer.parseInt(serverProps.getProperty("server.port"));

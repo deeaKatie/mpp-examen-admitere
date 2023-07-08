@@ -2,6 +2,7 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,26 +21,26 @@ import java.io.IOException;
 
 
 public class PlayController implements IObserver {
-    ObservableList<User> modelLeaderboard = FXCollections.observableArrayList();
+    ObservableList<User> modelPapers = FXCollections.observableArrayList();
     private IServices service;
     private User loggedUser;
 
     @FXML
     Label usernameLabel;
     @FXML
-    Label gameStatusLabel;
+    Label paperStatusLabel; //todo rename elements in a general way
     @FXML
     Button logOutButton;
     @FXML
-    ListView<User> leaderboardListView;
+    ListView<User> papersListView;
     @FXML
-    Label leaderboardLabel;
+    Label papersLabel;
     @FXML
-    Label yourGameLabel;
+    Label yourGradeLabel;
     @FXML
-    Button startGameButtonSS;
+    Button insertGradeButton;
 
-    boolean sentToWaiting = false;
+    boolean sentToWaiting = false; // todo remove this
 
     public void setService(IServices service) {
         this.service = service;
@@ -49,8 +50,10 @@ public class PlayController implements IObserver {
     }
     public void initVisuals() {
         usernameLabel.setText("Hi, " + loggedUser.getUsername());
-        gameStatusLabel.setVisible(false);
+        paperStatusLabel.setVisible(false);
     }
+
+    //todo a fill listview automatically
     @FXML
     public void logOutHandler() throws IOException {
         System.out.println("Logging out!\n");
@@ -69,6 +72,11 @@ public class PlayController implements IObserver {
         logCtrl.setService(service);
         stage.setScene(scene);
     }
+
+    public void gradeAdded(ActionEvent actionEvent) {
+
+    }
+
 
 
 }
