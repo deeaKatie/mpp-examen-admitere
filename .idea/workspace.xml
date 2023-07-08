@@ -4,17 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ccfa7e6b-654c-463b-a268-93519fa570db" name="Changes" comment="created paper &amp; grade">
-      <change afterPath="$PROJECT_DIR$/Persistance/src/main/java/repository/IGradeDBRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Persistance/src/main/java/repository/IPaperDBRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Persistance/src/main/java/repository/IParticipantDBRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Persistance/src/main/java/repository/PaperDBRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Persistance/src/main/java/repository/ParticipantDBRepository.java" afterDir="false" />
+    <list default="true" id="ccfa7e6b-654c-463b-a268-93519fa570db" name="Changes" comment="created repos">
+      <change afterPath="$PROJECT_DIR$/Model/src/main/java/dto/ListItemDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model/src/main/java/dto/ListItemsDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model/src/main/java/dto/PaperSentDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/src/main/java/model/Paper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Model/src/main/java/model/Paper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistance/src/main/java/repository/GameDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistance/src/main/java/repository/GradeDBRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistance/src/main/java/repository/IGameDBRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistance/src/main/java/repository/UserDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Persistance/src/main/java/repository/UserDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/StartServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/StartServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/service/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/service/Service.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,7 +238,7 @@
       <workItem from="1688571902403" duration="14263000" />
       <workItem from="1688663280065" duration="5500000" />
       <workItem from="1688726907524" duration="8233000" />
-      <workItem from="1688806128439" duration="2535000" />
+      <workItem from="1688806128439" duration="2986000" />
     </task>
     <task id="LOCAL-00001" summary="first working version, w/ log in &amp; showing users">
       <created>1688574514383</created>
@@ -327,7 +323,15 @@
       <option name="project" value="LOCAL" />
       <updated>1688808368634</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="created repos">
+      <option name="closed" value="true" />
+      <created>1688809028979</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1688809028979</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,6 +359,7 @@
     <MESSAGE value="base app" />
     <MESSAGE value="created Participant" />
     <MESSAGE value="created paper &amp; grade" />
-    <option name="LAST_COMMIT_MESSAGE" value="created paper &amp; grade" />
+    <MESSAGE value="created repos" />
+    <option name="LAST_COMMIT_MESSAGE" value="created repos" />
   </component>
 </project>

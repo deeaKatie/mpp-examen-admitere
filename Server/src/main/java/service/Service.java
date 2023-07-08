@@ -2,8 +2,8 @@ package service;
 
 import exception.RepositoryException;
 import model.User;
+import repository.*;
 import repository.IGameDBRepository;
-import repository.IUserRepository;
 import services.IObserver;
 import services.IServices;
 import services.ServiceException;
@@ -14,16 +14,18 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Service implements IServices {
 
     private IUserRepository userRepository;
-    private IGameDBRepository gameDBRepository;
-    private Map<Long, IObserver> loggedClients; // key - id , val - observer
+    IGradeDBRepository gradeDBRepository;
+    IParticipantDBRepository participantDBRepository;
+    IPaperDBRepository paperDBRepository;
+    private Map<Long, IObserver> loggedClients;
     private final int defaultThreadsNo = 5;
-    // private Map.Entry<Long, IObserver> client;
 
-
-    public Service(IUserRepository userRepository,
-                   IGameDBRepository gameDBRepository) {
+    public Service(IUserRepository userRepository, IGradeDBRepository gradeDBRepository,
+                   IParticipantDBRepository participantDBRepository, IPaperDBRepository paperDBRepository) {
         this.userRepository = userRepository;
-        this.gameDBRepository = gameDBRepository;
+        this.gradeDBRepository = gradeDBRepository;
+        this.participantDBRepository = participantDBRepository;
+        this.paperDBRepository = paperDBRepository;
         this.loggedClients = new ConcurrentHashMap<>();
     }
 

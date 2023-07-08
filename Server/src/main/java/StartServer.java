@@ -27,9 +27,12 @@ public class StartServer {
         }
 
         IUserRepository userRepository = new UserDBRepository();
-        IGameDBRepository gameDBRepository = new GameDBRepository();
+        IGradeDBRepository gradeDBRepository = new GradeDBRepository();
+        IParticipantDBRepository participantDBRepository = new ParticipantDBRepository();
+        IPaperDBRepository paperDBRepository = new PaperDBRepository();
 
-        IServices service=new Service(userRepository, gameDBRepository);
+        IServices service=new Service(userRepository, gradeDBRepository,
+                participantDBRepository, paperDBRepository);
 
         System.out.println("Users: ");
         for( var u : userRepository.getAll() ) {
