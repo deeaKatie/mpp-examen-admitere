@@ -1,5 +1,7 @@
 package rpcprotocol;
 
+import dto.ListItemDTO;
+import dto.ListItemsDTO;
 import model.User;
 import services.IObserver;
 import services.IServices;
@@ -9,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -53,17 +56,6 @@ public class ServicesRpcProxy implements IServices {
         return null;
     }
 
-    @Override
-    public void logout(User user) throws ServiceException {
-        Request req = (new Request.Builder()).type(RequestType.LOGOUT).data(user).build();
-        this.sendRequest(req);
-        Response response = this.readResponse();
-        this.closeConnection();
-        if (response.type() == ResponseType.ERROR) {
-            String err = response.data().toString();
-            throw new ServiceException(err);
-        }
-    }
 
     private void initializeConnection() throws ServiceException {
         try {
@@ -95,17 +87,7 @@ public class ServicesRpcProxy implements IServices {
         Thread tw = new Thread(new ReaderThread());
         tw.start();
     }
-    private void handleUpdate(Response response) {
-        System.out.println("PROXY -> handleUpdate");
-        System.out.println("RESPONSE -> " + response);
-//        if (response.type() == ResponseType.GAME_FINISHED) {
-//            //smth
-//        }
-    }
-    private boolean isUpdate(Response response) {
-        //return response.type() == ResponseType.GAME_FINISHED;
-        return false;
-    }
+
     private void sendRequest(Request request) throws ServiceException {
         try {
             this.output.writeObject(request);
@@ -159,4 +141,42 @@ public class ServicesRpcProxy implements IServices {
         }
     }
 
+
+    private void handleUpdate(Response response) {
+        System.out.println("PROXY -> handleUpdate");
+        System.out.println("RESPONSE -> " + response);
+//        if (response.type() == ResponseType.GAME_FINISHED) {
+//            //smth
+//        }
+    }
+    private boolean isUpdate(Response response) {
+        //return response.type() == ResponseType.GAME_FINISHED;
+        return false;
+    }
+
+    //todo reagrage methods order
+    @Override
+    public void logout(User user) throws ServiceException { //todo fix this method no this.
+        Request req = (new Request.Builder()).type(RequestType.LOGOUT).data(user).build();
+        sendRequest(req);
+        Response response = this.readResponse();
+        this.closeConnection();
+        if (response.type() == ResponseType.ERROR) {
+            String err = response.data().toString();
+            throw new ServiceException(err);
+        }
+    }
+
+    @Override
+    public ListItemsDTO getPapers(User corector) throws ServiceException {
+        Request req = (new Request.Builder()).type(RequestType.GET_PAPERS).data(corector).build();
+        sendRequest(req);
+        Response response = readResponse();
+        if (response.type() == ResponseType.OK) {
+            return ((ListItemsDTO) response.data());
+        } else if (response.type() == ResponseType.ERROR) {
+            throw new ServiceException(response.data().toString());
+        }
+        return null;
+    }
 }

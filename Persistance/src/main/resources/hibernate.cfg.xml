@@ -20,6 +20,9 @@
         <mapping resource="model/User.hbm.xml"/>
 <!--        <mapping class="model.User"/>-->
 
-        <mapping class="model.Game"/>
+        <mapping class="model.Grade"/>
+        <mapping class="model.Paper"/>
+        <mapping class="model.Participant"/>
+        <mapping class="model.User"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,5 +1,7 @@
 package controller;
 
+import dto.ListItemDTO;
+import dto.ListItemsDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,10 +20,11 @@ import services.ServiceException;
 import utils.MessageAlert;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class PlayController implements IObserver {
-    ObservableList<User> modelPapers = FXCollections.observableArrayList();
+    ObservableList<ListItemDTO> modelPapers = FXCollections.observableArrayList();
     private IServices service;
     private User loggedUser;
 
@@ -32,7 +35,7 @@ public class PlayController implements IObserver {
     @FXML
     Button logOutButton;
     @FXML
-    ListView<User> papersListView;
+    ListView<ListItemDTO> papersListView;
     @FXML
     Label papersLabel;
     @FXML
@@ -51,6 +54,17 @@ public class PlayController implements IObserver {
     public void initVisuals() {
         usernameLabel.setText("Hi, " + loggedUser.getUsername());
         paperStatusLabel.setVisible(false);
+
+        ListItemsDTO papersS = new ListItemsDTO();
+        try {
+            papersS = service.getPapers(loggedUser);
+        } catch (ServiceException ex) {
+            MessageAlert.showMessage(null, Alert.AlertType.ERROR,"Error getting papers", ex.getMessage());
+        }
+
+        //todo how to add colour to listview items
+        modelPapers.setAll(papersS.getItems());
+        papersListView.setItems(modelPapers);
     }
 
     //todo a fill listview automatically

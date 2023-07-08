@@ -1,13 +1,14 @@
 package service;
 
+import dto.ListItemDTO;
+import dto.ListItemsDTO;
 import exception.RepositoryException;
+import model.Paper;
 import model.User;
 import repository.*;
-import repository.IGameDBRepository;
 import services.IObserver;
 import services.IServices;
 import services.ServiceException;
-
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -59,5 +60,28 @@ public class Service implements IServices {
             throw new ServiceException("User not logged in");
         }
     }
+
+    @Override
+    public ListItemsDTO getPapers(User corecotr) throws ServiceException {
+        List<Paper> papers = (List<Paper>) paperDBRepository.getAll();
+        ListItemsDTO papersToSend = new ListItemsDTO();
+
+        for (var p : papers) {
+            if (p.getCorectori().contains(corecotr)) {
+                if (Objects.equals(p.getStatus(), "toBeRecorrected") || p.getGrades().size() < 2) {
+                    Double gradeDifference = -1D;
+                    if (p.getGrades().size() == 2) {
+                        gradeDifference = p.getGrades().get(1).getValue() - p.getGrades().get(2).getValue();
+                    }
+                    ListItemDTO paperDTO = new ListItemDTO(p.getId(), gradeDifference, p.getStatus());
+                    papersToSend.addItem(paperDTO);
+                }
+            }
+        }
+        return papersToSend;
+
+
+    }
+
 
 }

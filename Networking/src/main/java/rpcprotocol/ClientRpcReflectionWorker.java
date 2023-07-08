@@ -1,5 +1,7 @@
 package rpcprotocol;
 
+import dto.ListItemDTO;
+import dto.ListItemsDTO;
 import model.User;
 import services.IObserver;
 import services.IServices;
@@ -109,6 +111,17 @@ public class ClientRpcReflectionWorker implements Runnable, IObserver {
             this.connected = false;
             System.out.println("WORKER -> log out");
             return (new Response.Builder()).type(ResponseType.OK).build();
+        } catch (ServiceException ex) {
+            return (new Response.Builder()).type(ResponseType.ERROR).data(ex.getMessage()).build();
+        }
+    }
+
+    private Response handleGET_PAPERS(Request request) { //todo fix sout in eaxh methhod
+        System.out.println("WORKER -> GET_PAPERS");
+
+        try {
+            ListItemsDTO items = service.getPapers((User) request.data());
+            return (new Response.Builder()).type(ResponseType.OK).data(items).build();
         } catch (ServiceException ex) {
             return (new Response.Builder()).type(ResponseType.ERROR).data(ex.getMessage()).build();
         }

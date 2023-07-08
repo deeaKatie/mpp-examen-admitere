@@ -2,7 +2,9 @@ package rpcprotocol;
 
 public enum RequestType {
     LOGIN,
-    LOGOUT;
+    LOGOUT,
+    GET_PAPERS,
+    PAPER_GRADE;
     private RequestType() {
     }
 }

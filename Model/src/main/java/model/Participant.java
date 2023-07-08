@@ -19,8 +19,7 @@ public class Participant implements HasId<Long> {
         name = "";
     }
 
-    public Participant(Long id, String name) {
-        this.id = id;
+    public Participant(String name) {
         this.name = name;
     }
 

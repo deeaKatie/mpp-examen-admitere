@@ -2,6 +2,7 @@ package dto;
 
 import model.HasId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListItemsDTO implements HasId<Long> {
@@ -9,6 +10,7 @@ public class ListItemsDTO implements HasId<Long> {
     private List<ListItemDTO> items;
 
     public ListItemsDTO() {
+        items = new ArrayList<>();
     }
 
     public ListItemsDTO(List<ListItemDTO> items) {
@@ -36,4 +38,5 @@ public class ListItemsDTO implements HasId<Long> {
     public void setId(Long aLong) {
 
     }
+
 }

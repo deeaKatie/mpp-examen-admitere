@@ -12,7 +12,7 @@ public class Paper implements HasId<Long> {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<User> corectori;
     @OneToOne
     private Participant participant;
@@ -93,5 +93,17 @@ public class Paper implements HasId<Long> {
 
     public void setFinalGrade(Grade finalGrade) {
         this.finalGrade = finalGrade;
+    }
+
+    @Override
+    public String toString() {
+        return "Paper{" +
+                "id=" + id +
+                ", corectori=" + corectori +
+                ", participant=" + participant +
+                ", grades=" + grades +
+                ", finalGrade=" + finalGrade +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
