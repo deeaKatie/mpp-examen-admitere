@@ -41,8 +41,13 @@ public class PaperDBRepository implements IPaperDBRepository {
     }
 
     @Override
-    public void update(Paper entity, Long aLong) {
-
+    public void update(Paper entity, Long id) {
+        logger.traceEntry();
+        Transaction transaction = session.beginTransaction();
+        entity.setId(id);
+        session.update(entity);
+        transaction.commit();
+        logger.traceExit();
     }
 
     @Override

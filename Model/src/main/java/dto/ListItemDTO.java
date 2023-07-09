@@ -54,9 +54,10 @@ public class ListItemDTO implements HasId<Long> {
 
     @Override
     public String toString() {
-        if (gradeDifference < 0) {
+
+        if ( Math.abs(gradeDifference) < 1 || gradeDifference == -1D) {
             return "Paper " + idPaper + " " + status;
         }
-        return "Paper " + idPaper + " " + status + " -> dif: " + gradeDifference;
+        return "Paper " + idPaper + " " + status + " -> dif: " + Math.abs(gradeDifference);
     }
 }

@@ -2,17 +2,17 @@ package controller;
 
 import dto.ListItemDTO;
 import dto.ListItemsDTO;
+import dto.PaperSentDTO;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Grade;
 import model.User;
 import services.IObserver;
 import services.IServices;
@@ -21,6 +21,7 @@ import utils.MessageAlert;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 
 public class PlayController implements IObserver {
@@ -42,6 +43,8 @@ public class PlayController implements IObserver {
     Label yourGradeLabel;
     @FXML
     Button insertGradeButton;
+    @FXML
+    TextField gradeTextField;
 
     boolean sentToWaiting = false; // todo remove this
 
@@ -63,6 +66,10 @@ public class PlayController implements IObserver {
         }
 
         //todo how to add colour to listview items
+        updateListView(papersS);
+    }
+
+    public void updateListView(ListItemsDTO papersS) {
         modelPapers.setAll(papersS.getItems());
         papersListView.setItems(modelPapers);
     }
@@ -88,7 +95,59 @@ public class PlayController implements IObserver {
     }
 
     public void gradeAdded(ActionEvent actionEvent) {
+        ListItemDTO selectedPaper = papersListView.getSelectionModel().getSelectedItem();
+        String gradeS = gradeTextField.getText();
+        Grade gradeD = new Grade(Double.parseDouble(gradeS), loggedUser);
 
+        PaperSentDTO paperSentDTO = new PaperSentDTO(selectedPaper, gradeD, loggedUser);
+         try {
+             service.gradedPaper(paperSentDTO);
+         }  catch (ServiceException ex) {
+             MessageAlert.showMessage(null, Alert.AlertType.ERROR,"Error grading paper", ex.getMessage());
+         }
+
+    }
+
+    public void gradeOkayOne() {
+        Platform.runLater(() -> {
+            paperStatusLabel.setText("Grade saved, waiting for other corector..");
+            paperStatusLabel.setVisible(true);
+            new java.util.Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    paperStatusLabel.setVisible(false);
+                }
+            }, 1000);
+
+        });
+    }
+
+    public void gradeOkayBoth() {
+        Platform.runLater(() -> {
+            paperStatusLabel.setVisible(true);
+            paperStatusLabel.setText("Both grades okay");
+            new java.util.Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                   paperStatusLabel.setVisible(false);
+                }
+            }, 1000);
+
+        });
+    }
+
+    public void gradeRedo() {
+        Platform.runLater(() -> {
+            paperStatusLabel.setVisible(true);
+            paperStatusLabel.setText("Bad grade, must redo!");
+            new java.util.Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    paperStatusLabel.setVisible(false);
+                }
+            }, 1000);
+
+        });
     }
 
 

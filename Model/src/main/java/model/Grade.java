@@ -22,9 +22,17 @@ public class Grade implements HasId<Long> {
         teacher = new User();
     }
 
-    public Grade(Long id, Double value) {
-        this.id = id;
+    public Grade(Double value, User teacher) {
         this.value = value;
+        this.teacher = teacher;
+    }
+
+    public User getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(User teacher) {
+        this.teacher = teacher;
     }
 
     @Override

@@ -42,11 +42,11 @@ public class UserDBRepository implements IUserRepository{
     }
 
     @Override
-    public void update(User user, Long id) {
+    public void update(User entity, Long id) {
         logger.traceEntry();
         Transaction transaction = session.beginTransaction();
-        user.setId(id);
-        session.update(user);
+        entity.setId(id);
+        session.update(entity);
         transaction.commit();
         logger.traceExit();
     }

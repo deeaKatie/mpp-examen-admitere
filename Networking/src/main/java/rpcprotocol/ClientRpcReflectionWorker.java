@@ -2,6 +2,7 @@ package rpcprotocol;
 
 import dto.ListItemDTO;
 import dto.ListItemsDTO;
+import dto.PaperSentDTO;
 import model.User;
 import services.IObserver;
 import services.IServices;
@@ -127,4 +128,43 @@ public class ClientRpcReflectionWorker implements Runnable, IObserver {
         }
     }
 
+    private Response handlePAPER_GRADE(Request request) {
+        System.out.println("WORKER -> PAPER_GRADE");
+        try {
+            service.gradedPaper((PaperSentDTO) request.data()); //todo smarter to use updats?
+            return (new Response.Builder()).type(ResponseType.OK).build();
+        } catch (ServiceException ex) {
+            return (new Response.Builder()).type(ResponseType.ERROR).data(ex.getMessage()).build();
+        }
+    }
+
+    @Override
+    public void gradeOkayOne() {
+        System.out.println("WORKER -> OKAY_ONE");
+        try {
+            sendResponse((new Response.Builder()).type(ResponseType.OK_ONE).build());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void gradeOkayBoth() {
+        System.out.println("WORKER -> OKAY_BOTH");
+        try {
+            sendResponse((new Response.Builder()).type(ResponseType.OK_BOTH).build());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void gradeRedo() {
+        System.out.println("WORKER -> REDO");
+        try {
+            sendResponse((new Response.Builder()).type(ResponseType.REDO).build());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

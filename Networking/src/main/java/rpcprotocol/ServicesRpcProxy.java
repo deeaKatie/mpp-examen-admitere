@@ -2,6 +2,7 @@ package rpcprotocol;
 
 import dto.ListItemDTO;
 import dto.ListItemsDTO;
+import dto.PaperSentDTO;
 import model.User;
 import services.IObserver;
 import services.IServices;
@@ -145,13 +146,19 @@ public class ServicesRpcProxy implements IServices {
     private void handleUpdate(Response response) {
         System.out.println("PROXY -> handleUpdate");
         System.out.println("RESPONSE -> " + response);
-//        if (response.type() == ResponseType.GAME_FINISHED) {
-//            //smth
-//        }
+        if (response.type() == ResponseType.OK_ONE) {
+            client.gradeOkayOne();
+        } else if (response.type() == ResponseType.OK_BOTH) {
+            client.gradeOkayBoth();
+        } else if (response.type() == ResponseType.REDO) {
+            client.gradeRedo();
+        }
     }
     private boolean isUpdate(Response response) {
-        //return response.type() == ResponseType.GAME_FINISHED;
-        return false;
+        return response.type() == ResponseType.OK_ONE ||
+                response.type() == ResponseType.OK_BOTH ||
+                response.type() == ResponseType.REDO ||
+                response.type() == ResponseType.PAPERS_UPDATE;
     }
 
     //todo reagrage methods order
@@ -178,5 +185,18 @@ public class ServicesRpcProxy implements IServices {
             throw new ServiceException(response.data().toString());
         }
         return null;
+    }
+
+    @Override
+    public void gradedPaper(PaperSentDTO paperSentDTO) throws ServiceException {
+        System.out.println("PROXY -> GRADE PAPER");
+        Request req = (new Request.Builder()).type(RequestType.PAPER_GRADE).data(paperSentDTO).build();
+        sendRequest(req);
+        Response response = readResponse();
+        if (response.type() == ResponseType.OK) {
+            System.out.println("PROXY -> OK response");
+        } else if (response.type() == ResponseType.ERROR) {
+            throw new ServiceException(response.data().toString());
+        }
     }
 }
